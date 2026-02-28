@@ -1,4 +1,4 @@
-package com.goncalves.ecommerce;
+package com.goncalves.ecommerce.entity;
 
 import jakarta.persistence.*;
 
@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Table(name = "customers")
 public class Customer {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
