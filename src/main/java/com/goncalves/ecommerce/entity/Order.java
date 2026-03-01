@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -24,7 +25,11 @@ public class Order {
     private LocalDateTime orderDate;
     private LocalDateTime updatedAt;
 
+    @OneToMany (mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items;
+
     public enum OrderStatus {
         PENDING, PAID, SHIPPED, DELIVERED, CANCELED
     }
+
 }

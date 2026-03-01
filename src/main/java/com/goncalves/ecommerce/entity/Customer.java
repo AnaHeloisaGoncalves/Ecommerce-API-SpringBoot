@@ -3,6 +3,7 @@ package com.goncalves.ecommerce.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -21,4 +22,7 @@ public class Customer {
     private String address;
 
     private LocalDateTime createdAt;
+
+    @OneToMany (mappedBy = "customer")
+    private List<Order> orders;
 }

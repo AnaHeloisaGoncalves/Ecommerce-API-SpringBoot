@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -22,5 +23,8 @@ public class Product {
     private Integer stockQuantity;
     private boolean active;
     private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
+
+    @OneToMany (mappedBy = "product")
+    private List<OrderItem> orderItems;
 }
