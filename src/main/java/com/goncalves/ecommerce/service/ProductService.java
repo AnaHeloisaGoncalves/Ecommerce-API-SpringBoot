@@ -34,7 +34,7 @@ public class ProductService {
 
     }
 
-    //Partial update product by id
+    //Partial product update by id
     public Product partialUpdateById(Long id, Product updatedProduct) {
         Product existingProduct = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
