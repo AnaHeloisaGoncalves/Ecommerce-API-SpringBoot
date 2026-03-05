@@ -222,7 +222,7 @@ Customer (1) ──── (N) Order (1) ──── (N) OrderItem (N) ───
 
 ---
 
-## 👩‍💻 Autora
+## 👩🏻‍💻 Autora
 
 **Ana Heloísa Henrique Gonçalves**  
 Estudante de Sistemas de Informação — 3° período
