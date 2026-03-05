@@ -2,6 +2,7 @@ package com.goncalves.ecommerce.controller;
 
 import com.goncalves.ecommerce.entity.Customer;
 import com.goncalves.ecommerce.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
         Customer saved = customerService.save(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -38,7 +39,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Customer> partialUpdateById(@PathVariable Long id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> partialUpdateById(@PathVariable Long id, @Valid @RequestBody Customer customer) {
         Customer updated = customerService.partialUpdateById(id, customer);
         return ResponseEntity.ok(updated);
     }

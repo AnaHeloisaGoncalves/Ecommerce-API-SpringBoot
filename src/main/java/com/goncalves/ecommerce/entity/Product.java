@@ -1,6 +1,10 @@
 package com.goncalves.ecommerce.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,14 +17,25 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Description is required")
     private String description;
 
+    @NotBlank(message = "SKU is required")
     @Column(unique = true)
     private String sku;
 
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.01", message = "Price must be greater than zero")
     private BigDecimal price;
+
+    @NotNull(message = "Stock quantity is required")
+    @Min(value = 0, message = "Stock quantity cannot be negative")
     private Integer stockQuantity;
+
     private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -28,8 +43,15 @@ public class Product {
     @OneToMany (mappedBy = "product")
     private List<OrderItem> orderItems;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
-    //Getters and Setters
     public Long getId() {
         return id;
     }

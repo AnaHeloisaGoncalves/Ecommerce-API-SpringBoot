@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +44,6 @@ public class OrderService {
         Order order = new Order();
         order.setCustomer(customer);
         order.setStatus(Order.OrderStatus.PENDING);
-        order.setCreatedAt(LocalDateTime.now());
-        order.setOrderDate(LocalDateTime.now());
 
         List<OrderItem> orderItems = new ArrayList<>();
         BigDecimal totalAmount = BigDecimal.ZERO;
@@ -99,5 +96,39 @@ public class OrderService {
         order.setItems(orderItems);
         order.setTotalAmount(totalAmount);
         return orderRepository.save(order);
+    }
+
+    public Order cancelOrder(Long id) {
+
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+
+        if (order.getStatus() == Order.OrderStatus.CANCELED) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Order is already canceled"
+            );
+        }
+
+        for (OrderItem item : order.getItems()) {
+            Product product = item.getProduct();
+            product.setStockQuantity(
+                    product.getStockQuantity() + item.getQuantity()
+            );
+        }
+
+        order.setStatus(Order.OrderStatus.CANCELED);
+
+        return orderRepository.save(order);
+    }
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
+    public Order findById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
     }
 }

@@ -32,6 +32,17 @@ public class Order {
         PENDING, PAID, SHIPPED, DELIVERED, CANCELED
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.orderDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     public Long getId() {
         return id;
     }

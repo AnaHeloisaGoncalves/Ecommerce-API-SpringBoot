@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Sensitive files ###
+.env
+*.env
+application-local.properties
+application-secrets.properties
+
+#Windows
+desktop.ini

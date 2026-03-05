@@ -2,6 +2,7 @@ package com.goncalves.ecommerce.controller;
 
 import com.goncalves.ecommerce.entity.Product;
 import com.goncalves.ecommerce.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product saved = productService.save(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -37,7 +38,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Product> partialUpdateById(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> partialUpdateById(@PathVariable Long id, @Valid @RequestBody Product product) {
         Product updated = productService.partialUpdateById(id, product);
         return ResponseEntity.ok(updated);
     }
