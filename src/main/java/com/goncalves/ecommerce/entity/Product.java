@@ -1,5 +1,6 @@
 package com.goncalves.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -36,11 +37,12 @@ public class Product {
     @Min(value = 0, message = "Stock quantity cannot be negative")
     private Integer stockQuantity;
 
-    private boolean active;
+    private boolean active = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @OneToMany (mappedBy = "product")
+    @JsonIgnore
     private List<OrderItem> orderItems;
 
     @PrePersist

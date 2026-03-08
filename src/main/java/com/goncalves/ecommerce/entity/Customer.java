@@ -1,5 +1,6 @@
 package com.goncalves.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,6 +36,7 @@ public class Customer {
     private LocalDateTime createdAt;
 
     @OneToMany (mappedBy = "customer")
+    @JsonIgnore
     private List<Order> orders;
 
     @PrePersist
